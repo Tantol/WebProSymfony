@@ -1,3 +1,8 @@
+trade:
+    resource: "@TradeBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
