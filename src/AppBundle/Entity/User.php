@@ -13,7 +13,8 @@ use TradeBundle\Entity\Product;
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
- * @UniqueEntity(fields={"username", "email"}, message="This one is already taken, please use other")
+ * @UniqueEntity(fields={"username"}, message="This username is already taken")
+ * @UniqueEntity(fields={"email"}, message="This email is already taken")
  */
 class User implements UserInterface
 {
@@ -30,6 +31,7 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=255, unique=true)
+     * @Assert\Valid()
      */
     private $username;
 
