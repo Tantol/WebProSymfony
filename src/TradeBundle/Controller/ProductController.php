@@ -67,9 +67,12 @@ class ProductController extends Controller
     public function showAction(Product $product)
     {
         $deleteForm = $this->createDeleteForm($product);
+        
+        $category = $product->getCategory();
 
         return $this->render('product/show.html.twig', array(
             'product' => $product,
+            'category' => $category,
             'delete_form' => $deleteForm->createView(),
         ));
     }

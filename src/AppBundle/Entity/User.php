@@ -52,7 +52,7 @@ class User implements UserInterface
      * @var Product
      * @ORM\OneToMany(targetEntity="TradeBundle\Entity\Product", mappedBy="user")
      */
-    private $products;
+    private $product;
 
 
     /**
@@ -202,5 +202,10 @@ class User implements UserInterface
     public function getProducts()
     {
         return $this->products;
+    }
+    
+    public function __toString(){
+        return $this->username;
+        // return $this->id;
     }
 }

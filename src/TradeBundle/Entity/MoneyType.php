@@ -151,4 +151,9 @@ class MoneyType
     {
         return $this->products;
     }
+    
+    public function __toString(){
+        return $this->shortcut;
+        // return $this->id;
+    }
 }

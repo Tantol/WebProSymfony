@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Moneytypes list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Shortcut</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for moneyType in moneyTypes %}
+            <tr>
+                <td><a href="{{ path('moneytype_show', { 'id': moneyType.id }) }}">{{ moneyType.id }}</a></td>
+                <td>{{ moneyType.name }}</td>
+                <td>{{ moneyType.shortcut }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('moneytype_show', { 'id': moneyType.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('moneytype_edit', { 'id': moneyType.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('moneytype_new') }}">Create a new moneyType</a>
+        </li>
+    </ul>
+{% endblock %}
