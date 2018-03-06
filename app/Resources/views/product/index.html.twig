@@ -26,12 +26,16 @@
                 <td>{{ product.amount }}</td>
                 <td>
                     <ul>
+                        {% if (is_granted('view', product)) %}
                         <li>
                             <a href="{{ path('product_show', { 'id': product.id }) }}">show</a>
                         </li>
+                        {% endif %}
+                        {% if (is_granted('edit', product)) %}
                         <li>
                             <a href="{{ path('product_edit', { 'id': product.id }) }}">edit</a>
                         </li>
+                        {% endif %}
                     </ul>
                 </td>
             </tr>

@@ -1,4 +1,8 @@
 services:
+    app.product.voter:
+        class: TradeBundle\Security\ProductVoter
+        tags: 
+            - { name: security.voter }
 #    trade.example:
 #        class: TradeBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]

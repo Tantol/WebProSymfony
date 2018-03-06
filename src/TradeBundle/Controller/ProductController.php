@@ -5,7 +5,10 @@ namespace TradeBundle\Controller;
 use TradeBundle\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use TradeBundle\Security\ProductVoter;
+use Symfony\Component\Translation\Exception\LogicException;
 
 /**
  * Product controller.
@@ -66,6 +69,9 @@ class ProductController extends Controller
      */
     public function showAction(Product $product)
     {
+        if (!$this->isGranted(ProductVoter::VIEW, $product)){
+            throw new LogicException('U dont have premission to view this product');
+        }
         $deleteForm = $this->createDeleteForm($product);
         
         $category = $product->getCategory();
@@ -85,6 +91,9 @@ class ProductController extends Controller
      */
     public function editAction(Request $request, Product $product)
     {
+        if (!$this->isGranted(ProductVoter::EDIT, $product)){
+            throw new LogicException('U dont have premission to view this product');
+        }
         $deleteForm = $this->createDeleteForm($product);
         $editForm = $this->createForm('TradeBundle\Form\ProductType', $product);
         $editForm->handleRequest($request);
@@ -110,6 +119,9 @@ class ProductController extends Controller
      */
     public function deleteAction(Request $request, Product $product)
     {
+        if (!$this->isGranted(ProductVoter::DELETE, $product)){
+            throw new LogicException('U dont have premission to view this product');
+        }
         $form = $this->createDeleteForm($product);
         $form->handleRequest($request);
 
