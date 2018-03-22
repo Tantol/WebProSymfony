@@ -4,13 +4,38 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use AppBundle\Entity\User;
-use AppBundle\Form\UserType;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use AppBundle\Entity\User;
+use AppBundle\Entity\Group;
+use AppBundle\Form\UserType;
 
-class RegisterController extends Controller
+class LoginAndRegisterControler extends Controller
 {
+    /**
+     * @Route("/login", name="login")
+     */
+    public function loginAction(Request $request, AuthenticationUtils $authenticationUtils)
+    {
+        
+        $errors = $authenticationUtils->getLastAuthenticationError();
+        
+        $lastUserName = $authenticationUtils->getLastUsername();
+        
+        return $this->render('login/login.html.twig', array(
+            'errors' => $errors,
+            'username' => $lastUserName,
+        ));
+    }
+    
+    /**
+     * @Route("/logout", name="logout")
+     */
+    public function logoutAction()  
+    {
+    }
+    
     /**
      * @Route("/register")
      * @param Request $request
@@ -31,6 +56,8 @@ class RegisterController extends Controller
         if ($form->isSubmitted() && $form->isValid()){
             // Create the user
             $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
+            $group = $em->getRepository('AppBundle:Group')->find(1);
+            $user->addGroup($group);
             
             $em->persist($user);
             $em->flush();

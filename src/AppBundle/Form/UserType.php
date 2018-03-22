@@ -37,7 +37,7 @@ class UserType extends AbstractType{
                 'attr' => array(
                  'class' => 'form-control'), 
                 'label' => 'Repeat password')
-                    ))
+        ))
                 ->add('submit', Type\SubmitType::class, [
                     'attr' => [
                         'class' => 'btn btn-success'

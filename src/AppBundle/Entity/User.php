@@ -7,6 +7,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use TradeBundle\Entity\Product;
+use Doctrine\Common\Collections\ArrayCollection;
+use AppBundle\Entity\Group;
 
 /**
  * User
@@ -55,7 +57,12 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="TradeBundle\Entity\Product", mappedBy="user")
      */
     private $product;
-
+    
+    /**
+     * @var Group
+     * @ORM\ManyToMany(targetEntity="Group", inversedBy="users")
+     */
+    private $groups;
 
     /**
      * Get id
@@ -143,15 +150,12 @@ class User implements UserInterface
         
     }
 
-    public function getRoles() 
-    {
-        return [
-            'ROLE_USER'
-        ];
-    }
-
     public function getSalt() {
         
+    }
+    
+    public function getRoles() {
+        return $this->groups->toArray();
     }
 
     /**
@@ -160,6 +164,7 @@ class User implements UserInterface
     public function __construct()
     {
         $this->product = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->groups = new ArrayCollection();
     }
 
     /**
@@ -209,5 +214,39 @@ class User implements UserInterface
     public function __toString(){
         return $this->username;
         // return $this->id;
+    }
+
+    /**
+     * Add group
+     *
+     * @param \AppBundle\Entity\Group $group
+     *
+     * @return User
+     */
+    public function addGroup(\AppBundle\Entity\Group $group)
+    {
+        $this->groups[] = $group;
+
+        return $this;
+    }
+
+    /**
+     * Remove group
+     *
+     * @param \AppBundle\Entity\Group $group
+     */
+    public function removeGroup(\AppBundle\Entity\Group $group)
+    {
+        $this->groups->removeElement($group);
+    }
+
+    /**
+     * Get groups
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGroups()
+    {
+        return $this->groups;
     }
 }
