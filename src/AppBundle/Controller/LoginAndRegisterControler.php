@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Group;
-use AppBundle\Form\UserType;
+use AppBundle\Form\RegisterType;
 
 class LoginAndRegisterControler extends Controller
 {
@@ -49,7 +49,7 @@ class LoginAndRegisterControler extends Controller
         
         $user = new User();
         
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(RegisterType::class, $user);
         
         $form->handleRequest($request);
         

@@ -8,7 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use AppBundle\Entity\User;
 
-class UserType extends AbstractType{
+class RegisterType extends AbstractType{
     
     public function buildForm(FormBuilderInterface $builder, array $options) 
     {
